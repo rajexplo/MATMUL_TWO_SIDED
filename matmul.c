@@ -7,7 +7,16 @@
 double a[SIZE][SIZE];
 double b[SIZE][SIZE];
 double c[SIZE][SIZE];
+/*
+A*B=C
+Spilit A along the row over number of processors, say no. of processors 4, Ap1, Ap2, Ap3 and Ap4 .
++++++++++++++   P1
++++++++++++++   P2
++++++++++++++   P3
++++++++++++++   P4
 
+Brodcast B over all the processors. Multiply Ap's on each processors. And send the results to Master processors.
+ */
 void initialize_matrix(void){
 
   int i,j;
@@ -84,6 +93,7 @@ int main(int argc, char **argv){
 
     }
     end_time=MPI_Wtime();
+    printf("Time take for Computation is %10.4f sec\n", end_time-start_time);
     print_matrix();
 
 }else {
@@ -110,7 +120,7 @@ int main(int argc, char **argv){
       MPI_Send(&offset, 1, MPI_INT, 0, message, comm);
       MPI_Send(&c[offset][0], rows*SIZE, MPI_DOUBLE, 0, message, comm);
 
-      
+   
 
 
 }   
